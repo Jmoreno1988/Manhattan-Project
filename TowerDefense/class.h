@@ -63,7 +63,20 @@ private:
 /*****FIN CLASE ENEMY*****/
 
 /*****CLASE TOWER*****/
+class tower{
+tower(int tipo_torre, int posicion_fila, int posicion_columna, int posicion, int disparo, int rango, char representacion);//tipo_torre array con 1 --> torre W, 2 --> torre V "ejemplo"
 
+};
 /*****FIN CLASE TOWER*****/
 
+
+
+/*****CLASE CASTILLO*****/
+
+class castillo{
+castillo(int vidas, int num_torres_posibles );//num_torres_posibles para los espacios en blanco en el que puedes colocar una torre
+
+};
+
+/*****FIN CLASE CASTILLO*****/
 
