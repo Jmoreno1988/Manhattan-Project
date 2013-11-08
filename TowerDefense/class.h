@@ -61,3 +61,29 @@ private:
     int m_posicion;
 };
 /*****FIN CLASE ENEMY*****/
+
+
+
+/*****CLASE LISTA *****/
+/*
+class list(){
+public:
+    void agregar(int);
+    void borrar(int);
+    void vaciar_lista();
+    bool esta_vacia();
+    int cantidad_elementos();
+
+}
+*/
+/*****FIN CLASE LISTA *****/
+
+
+
+
+
+
+
+
+
+
