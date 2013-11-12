@@ -22,7 +22,6 @@ void map::inicializar(int filas, int columnas, char repre_blanco, char repre_mur
 	repre_muroH = repre_muroH;
 	repre_muroV = repre_muroV;
 	generar_mapa(tablero);
-	
 }
 
 //Destructor
@@ -40,7 +39,7 @@ void map::generar_mapa(int tablero[][50]){
 }
 
 //Pintar mapa(fila, columna y posicion de los enemigos)
-void map::pintar_mapa(enemy malos[], int total_enemigos)
+void map::pintar_mapa(enemy malos[])
 {	
 	
 	int fila[50] = {0};
@@ -64,7 +63,7 @@ void map::pintar_mapa(enemy malos[], int total_enemigos)
 	}
 
 	// Pintar
-        for(int x=0; x<10; x++){
+        for(int x=0; x<total_enemigos; x++){
                 for(int i = 0; i<50; i++){
                         if(mapa[x][i]==0)
                                 printf(" ");
@@ -85,6 +84,18 @@ void map::pintar_mapa(enemy malos[], int total_enemigos)
         	mapa[fila[i]][columna[i]] = valor_prev[i];
 	}
 }
+//Metodos getter
+int map::getTotalEnemigos(){
+	return total_enemigos;
+}
+
+// Metodos setter
+
+void map::setTotalEnemigos(int value){
+	total_enemigos = value;
+}
+
+
 /*****FIN METODOS MAP*****/
 
 /*****METODOS ENEMY*****/

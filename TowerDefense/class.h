@@ -50,7 +50,14 @@ public:
     map(int filas, int columnas, char repre_blanco, char repre_muroH, char repre_muroV, int tablero[][50]);
     ~map();
     void generar_mapa(int tablero[][50]);
-    void pintar_mapa(enemy malos[2], int total_enemigos);
+    void pintar_mapa(enemy malos[]);
+
+    // Metodos getter
+    int getTotalEnemigos();
+
+    // Metodos setter
+    void setTotalEnemigos(int value);
+
 private:
     void inicializar(int filas, int columnas, char repre_blanco, char repre_muroH, char repre_muroV, int tablero[][50]);
 
@@ -60,6 +67,7 @@ private:
     char repre_blanco;
     char repre_muroH;
     char repre_muroV;
+    int total_enemigos;
 public:
     int mapa[10][50];
 //    int array_enemigos[];
