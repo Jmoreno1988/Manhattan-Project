@@ -5,6 +5,9 @@
    *
    ***/
 
+#define length(x) (sizeof(x)/sizeof(x[0]))
+
+
 /*****METODOS MAP*****/
 
 //Constructor
@@ -19,7 +22,6 @@ void map::inicializar(int filas, int columnas, char repre_blanco, char repre_mur
 	repre_muroH = repre_muroH;
 	repre_muroV = repre_muroV;
 	generar_mapa(tablero);
-	
 }
 
 //Destructor
@@ -37,43 +39,80 @@ void map::generar_mapa(int tablero[][50]){
 }
 
 //Pintar mapa(fila, columna y posicion de los enemigos)
-void map::pintar_mapa(int fila, int columna, int posicion)
-{
-	mapa[fila][columna] = 101;
-	for(int x=0; x<10; x++){
-        	for(int i = 0; i<50; i++){
-                	if(mapa[x][i]==0)
-                        	printf(" ");
-                       	else if (mapa[x][i]==1)
-                        	printf("-");
-                       	else if (mapa[x][i]==2)
-                       		printf("|");
-                     	else if (mapa[x][i]>=3 && mapa[x][i]<=61)
-                            	printf(" ");
-                      	else if (mapa[x][i]==101)
-               			printf("X");
-             	}
-    		printf("\n");
-    	}
-	mapa[fila][columna] = posicion;
+void map::pintar_mapa(enemy malos[])
+{	
+	
+	int fila[50] = {0};
+	int columna[50];
+	int fila_prev[50];
+	int columna_prev[50];
+	int valor_prev[50];
 
+	// recoger todas las coord. donde se deben colocar los enemigos
+	for(int i=0; i<total_enemigos; i++){
+		fila[i] = malos[i].getFila();
+		columna[i] = malos[i].getColumna();
+	}
+ 
+	// Modificar el array del mapa para el movimiento	
+	for(int i=0; i<total_enemigos; i++){
+        	fila_prev[i] = fila[i];
+		columna_prev[i] = columna[i];
+		valor_prev[i] = mapa[fila[i]][columna[i]];
+        	mapa[fila[i]][columna[i]] = 101;
+	}
+
+	// Pintar
+        for(int x=0; x<total_enemigos; x++){
+                for(int i = 0; i<50; i++){
+                        if(mapa[x][i]==0)
+                                printf(" ");
+                        else if (mapa[x][i]==1)
+                                printf("-");
+                        else if (mapa[x][i]==2)
+                                printf("|");
+                        else if (mapa[x][i]>=3 && mapa[x][i]<=61)
+                                printf(" ");
+                        else if (mapa[x][i]==101)
+                                printf("X");
+                }
+                printf("\n");
+        }
+
+	// Devolver el array del mapa a su estado original	
+	for(int i=0; i<total_enemigos; i++){
+        	mapa[fila[i]][columna[i]] = valor_prev[i];
+	}
 }
+//Metodos getter
+int map::getTotalEnemigos(){
+	return total_enemigos;
+}
+
+// Metodos setter
+
+void map::setTotalEnemigos(int value){
+	total_enemigos = value;
+}
+
+
 /*****FIN METODOS MAP*****/
 
 /*****METODOS ENEMY*****/
 
 
 //Constructor 
-enemy::enemy(int vida, char representacion, int posicion_fila, int posicion_columna, int posicion){
-	inicializar(vida, representacion, posicion_fila, posicion_columna, posicion);
+enemy::enemy(int vida, char representacion, int posicion_fila, int posicion_columna, int posicion, int turno){
+	inicializar(vida, representacion, posicion_fila, posicion_columna, posicion, turno);
 }
 
-void enemy::inicializar(int vida, char representacion, int posicion_fila, int posicion_columna, int posicion){
+void enemy::inicializar(int vida, char representacion, int posicion_fila, int posicion_columna, int posicion, int turno){
 	m_vida = vida;
   	m_representacion = representacion;
   	m_fila = posicion_fila;
   	m_columna = posicion_columna;
   	m_posicion = posicion;
+	m_turno = turno;
 }
 
 
@@ -82,6 +121,7 @@ enemy::~enemy(){};
 
 //Movimiento(mapa sobre el que esta moviendose)
 void enemy::movimiento(int mapa[][50]){
+	if(m_turno <= 0){
 	if(mapa[m_fila][m_columna+1] == m_posicion+1){
        		m_columna+=1;
       		m_posicion+=1;
@@ -99,6 +139,7 @@ void enemy::movimiento(int mapa[][50]){
              	m_fila-=1;
         	m_posicion++;
      	}
+	}
 }
 
 //Metodos Getter
@@ -123,9 +164,20 @@ int enemy::getPosicion()
    return m_posicion;
 }
 
+int enemy::getTurno()
+{
+   return m_turno;
+}
+
+
 //Metodos Setter
 void enemy::setVida(int value)
 {
-    m_vida=value;
+    m_vida = value;
+}
+
+void enemy::setTurno(int value)
+{
+    m_turno = value;
 }
 /*****FIN METODOS ENEMY*****/
