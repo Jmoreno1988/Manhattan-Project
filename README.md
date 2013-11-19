@@ -4,9 +4,6 @@ Manhattan-Project
 ************************************************************
 Manhattan-Project.
 
-Estado: ....
-
-Versión: ...
 
 
 
