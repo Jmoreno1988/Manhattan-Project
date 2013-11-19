@@ -1,11 +1,12 @@
-
 Manhattan-Project
 =================
 
 ************************************************************
 Manhattan-Project.
 
-Estado: Parado.
+Estado: ....
+
+Versión: ...
 
 
 
