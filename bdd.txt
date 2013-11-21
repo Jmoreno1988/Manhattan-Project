@@ -1,0 +1,4 @@
+Mirar infrmacion sobre SQLite, para implementar la bdd para las puntuaciones.
+Tambien es posible guardar las puntuaciones en un txt y se vaya leyendi y sobreescribiendo, umando las puntuacuines anteriores
+Hacer la Posibilidad de hacer varios usuarios
+Subir dichas puntuaciones a un servidor(futuro)
