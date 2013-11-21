@@ -1,4 +1,5 @@
-Mirar infrmacion sobre SQLite, para implementar la bdd para las puntuaciones.
-Tambien es posible guardar las puntuaciones en un txt y se vaya leyendi y sobreescribiendo, umando las puntuacuines anteriores
-Hacer la Posibilidad de hacer varios usuarios
-Subir dichas puntuaciones a un servidor(futuro)
+-Hacer puntuaciones como máquinas recereativas.
+-Guaradar puntuacion + Nombre
+-Un Máximo de 10 puntuaciones, después de esto, se compara la puntuación actual con esas diez, si es peor que la última,
+se desecha, sino, se coloca un puesto por encima de la peor marca, despues se bajan un puesto cada puntuacion peor que la marca,
+desechando la puntuacion que este fuera del rango de 10.
