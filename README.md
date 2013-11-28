@@ -4,7 +4,7 @@ Manhattan-Project
 ************************************************************
 Manhattan-Project.
 
-[<img src="http://b.vimeocdn.com/ts/227/178/227178682_200.jpg" alt="SenchaCon 2011 JSDuck talk" />]
+[<img src="https://github.com/Jmoreno1988/Manhattan-Project/blob/master/Logo/logo_final.png" alt="SenchaCon 2011 JSDuck talk" />]
 
 
 
