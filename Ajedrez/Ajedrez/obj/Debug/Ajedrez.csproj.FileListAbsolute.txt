@@ -1,0 +1,6 @@
+c:\users\jose\documents\visual studio 2013\Projects\Ajedrez\Ajedrez\bin\Ajedrez.dll.config
+c:\users\jose\documents\visual studio 2013\Projects\Ajedrez\Ajedrez\bin\Ajedrez.dll
+c:\users\jose\documents\visual studio 2013\Projects\Ajedrez\Ajedrez\bin\Ajedrez.pdb
+c:\users\jose\documents\visual studio 2013\Projects\Ajedrez\Ajedrez\obj\Debug\Ajedrez.csprojResolveAssemblyReference.cache
+c:\users\jose\documents\visual studio 2013\Projects\Ajedrez\Ajedrez\obj\Debug\Ajedrez.dll
+c:\users\jose\documents\visual studio 2013\Projects\Ajedrez\Ajedrez\obj\Debug\Ajedrez.pdb
