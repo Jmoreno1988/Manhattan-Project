@@ -114,10 +114,8 @@ var Game = (function () {
             document.getElementById("clicks").innerHTML = text;
         });
     };
-    Game.prototype.initGame = function () {
-    };
-    Game.prototype.gameLoop = function () {
-    };
+    Game.prototype.initGame = function () { };
+    Game.prototype.gameLoop = function () { };
     return Game;
 })();
 window.onload = function () {
