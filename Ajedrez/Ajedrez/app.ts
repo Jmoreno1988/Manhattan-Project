@@ -12,7 +12,7 @@ class Tile {
         this.color = color;
     }
 
-    draw(ctx: any) {
+    public draw(ctx: any) {
         if (this.color == 0)
             ctx.fillStyle = "#000000"; // black
         else
@@ -46,7 +46,7 @@ class Board {
         this.canvas.addEventListener("mousemove", this.getPosition, false);
     }
 
-    getPosition() {
+    public getPosition() {
         var x = event.x;
         var y = event.y;
         var canvas = document.getElementById("canvas");
@@ -62,11 +62,11 @@ class Board {
         });
     }
 
-    changeColor() {
+    public changeColor() {
 
     }
 
-    generateTiles() {
+    public generateTiles() {
         var x = 0;
         var y = 0;
         var color = 1;
@@ -83,7 +83,7 @@ class Board {
         }
     }
 
-    draw() {
+    public draw() {
         for (var i = 0; i < 8; i++) {
             for (var a = 0; a < 8; a++) {
                 this.tiles[i][a].draw(this.ctx);
@@ -96,13 +96,28 @@ class Board {
 
 class Socket {
 
-    constructor() { }
+    private socket: any;
+    private idClient: number;
 
-    private newSocket() { }
-    private createHandler() { }
-    private sendMessage() { }
+    constructor(idClient: number) {
+        this.socket = io();
+        this.idClient = idClient;
+    }
 
+    public createHandler(typeHeandler: string, callback: any) {
+        this.socket.on(typeHeandler, function (data) {
+            callback(data);
+        });
+    }
 
+    public sendMessage(typeMsg: string ,data: {}) {
+        var msg = {
+            idClient: this.idClient,
+            data: data
+        } 
+
+        this.socket.emit(typeMsg, msg);
+    }
 }
 
 var idClient = Math.floor(Math.random() * 10000);

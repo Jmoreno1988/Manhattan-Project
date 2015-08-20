@@ -69,13 +69,21 @@ var Board = (function () {
     return Board;
 })();
 var Socket = (function () {
-    function Socket() {
+    function Socket(idClient) {
+        this.socket = io();
+        this.idClient = idClient;
     }
-    Socket.prototype.newSocket = function () {
+    Socket.prototype.createHandler = function (typeHeandler, callback) {
+        this.socket.on(typeHeandler, function (data) {
+            callback(data);
+        });
     };
-    Socket.prototype.createHandler = function () {
-    };
-    Socket.prototype.sendMessage = function () {
+    Socket.prototype.sendMessage = function (typeMsg, data) {
+        var msg = {
+            idClient: this.idClient,
+            data: data
+        };
+        this.socket.emit(typeMsg, msg);
     };
     return Socket;
 })();
