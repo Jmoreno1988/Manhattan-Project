@@ -3,19 +3,6 @@ var http = require('http').Server(app);
 var io = require('socket.io')(http);
 var clients = [];
 
-// Routes 
-app.get('/', function (req, res) {
-    res.sendFile(__dirname + '/index.html');
-});
-
-app.get('/app.css', function (req, res) {
-    res.sendFile(__dirname + '/app.css');
-});
-
-app.get('/app.js', function (req, res) {
-    res.sendFile(__dirname + '/app.js');
-});
-
 io.on('connection', function (socket) {
 
     socket.on('send client info', function (data) {

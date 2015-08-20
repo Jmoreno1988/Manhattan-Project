@@ -12,7 +12,7 @@ class Tile {
         this.color = color;
     }
 
-    draw(ctx: any) {
+    public draw(ctx: any) {
         if (this.color == 0)
             ctx.fillStyle = "#000000"; // black
         else
@@ -41,11 +41,12 @@ class Board {
         this.socket.on('update position', function (msg) {
             document.getElementById("log").innerHTML = msg;
         });
+
         this.canvas.addEventListener("mousedown", this.getPosition, false);
-        this.canvas.addEventListener("mousemove", this.changeColor, false);
+        this.canvas.addEventListener("mousemove", this.getPosition, false);
     }
 
-    getPosition() {
+    public getPosition() {
         var x = event.x;
         var y = event.y;
         var canvas = document.getElementById("canvas");
@@ -53,14 +54,19 @@ class Board {
         x -= canvas.offsetLeft;
         y -= canvas.offsetTop;
         var socket = io();
-        socket.emit('update position', "X: " + x + ", Y: " + y);
+        socket.emit('update position', {
+            idClient: idClient,
+            data: {
+                position: [x, y]
+            }
+        });
     }
 
-    changeColor() {
+    public changeColor() {
 
     }
 
-    generateTiles() {
+    public generateTiles() {
         var x = 0;
         var y = 0;
         var color = 1;
@@ -77,7 +83,7 @@ class Board {
         }
     }
 
-    draw() {
+    public draw() {
         for (var i = 0; i < 8; i++) {
             for (var a = 0; a < 8; a++) {
                 this.tiles[i][a].draw(this.ctx);
@@ -86,30 +92,87 @@ class Board {
     }
 }
 
+
+
+class Socket {
+
+    private socket: any;
+    private idClient: number;
+
+    constructor(idClient: number) {
+        this.socket = io();
+        this.idClient = idClient;
+    }
+
+    public createHandler(typeHeandler: string, callback: any) {
+        this.socket.on(typeHeandler, function (data) {
+            callback(data);
+        });
+    }
+
+    public sendMessage(typeMsg: string ,data: {}) {
+        var msg = {
+            idClient: this.idClient,
+            data: data
+        } 
+
+        this.socket.emit(typeMsg, msg);
+    }
+}
+
+var idClient = Math.floor(Math.random() * 10000);
+
 class Game {
 
     private socket: any;
+    private isready: boolean;
+    private idSocket: number;
 
     constructor() {
         this.socket = io();
         //this.socket.emit('newUser', 'pepe');
     }
-}
 
-// Esta parte es temporal hasta que tengamos la clase game que gestione todo esto
-var isInit = false;
+    public connectServer(name: string) {
+        var socket = io();
+        var that = this;
 
-function gameLoop() {
-    setTimeout(gameLoop, 100);
-    if (!isInit) {
-        var board = new Board("canvas", 50, 50);
-        board.generateTiles();
+        socket.on('connect', function (data) {
+            socket.emit('send client info', { customId: idClient, name: name });
+        });
+
+        this.socket.on('update players', function (msg) {
+            var text = "Users connected: <br>";
+            for (var i = 0; i < msg.players.length; i++) {
+                text += " - " + msg.players[i].name + "<br>"
+            }
+
+            document.getElementById("players").innerHTML = text;
+        });
+
+        this.socket.on('update position in client', function (msg) {
+            var text = "<br>";
+            for (var i = 0; i < msg.length; i++) {
+                text += "(x: " + msg[i].position[0] + ", y: " + msg[i].position[1] + ")<br>"
+            }
+
+            document.getElementById("clicks").innerHTML = text;
+        });
+        
     }
-    board.draw();
 
+    public initGame() { }
 
+    public gameLoop() { }
 }
 
 window.onload = () => {
-    gameLoop();
+    var userName = prompt("Please enter your name", "Harry Potter");
+    var game = new Game();
+    var board = new Board("canvas", 50, 50);
+
+    board.generateTiles();
+    board.draw();
+
+    game.connectServer(userName);
 };

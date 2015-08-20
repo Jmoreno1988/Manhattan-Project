@@ -4,3 +4,9 @@ c:\users\jose\documents\visual studio 2013\Projects\Ajedrez\Ajedrez\bin\Ajedrez.
 c:\users\jose\documents\visual studio 2013\Projects\Ajedrez\Ajedrez\obj\Debug\Ajedrez.csprojResolveAssemblyReference.cache
 c:\users\jose\documents\visual studio 2013\Projects\Ajedrez\Ajedrez\obj\Debug\Ajedrez.dll
 c:\users\jose\documents\visual studio 2013\Projects\Ajedrez\Ajedrez\obj\Debug\Ajedrez.pdb
+D:\test\Manhattan-Project-master\Manhattan-Project-master\Ajedrez\Ajedrez\bin\Ajedrez.dll.config
+D:\test\Manhattan-Project-master\Manhattan-Project-master\Ajedrez\Ajedrez\bin\Ajedrez.dll
+D:\test\Manhattan-Project-master\Manhattan-Project-master\Ajedrez\Ajedrez\bin\Ajedrez.pdb
+D:\test\Manhattan-Project-master\Manhattan-Project-master\Ajedrez\Ajedrez\obj\Debug\Ajedrez.dll
+D:\test\Manhattan-Project-master\Manhattan-Project-master\Ajedrez\Ajedrez\obj\Debug\Ajedrez.pdb
+D:\test\Manhattan-Project-master\Manhattan-Project-master\Ajedrez\Ajedrez\obj\Debug\Ajedrez.csprojResolveAssemblyReference.cache

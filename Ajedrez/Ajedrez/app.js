@@ -26,7 +26,7 @@ var Board = (function () {
             document.getElementById("log").innerHTML = msg;
         });
         this.canvas.addEventListener("mousedown", this.getPosition, false);
-        this.canvas.addEventListener("mousemove", this.changeColor, false);
+        this.canvas.addEventListener("mousemove", this.getPosition, false);
     }
     Board.prototype.getPosition = function () {
         var x = event.x;
@@ -35,7 +35,12 @@ var Board = (function () {
         x -= canvas.offsetLeft;
         y -= canvas.offsetTop;
         var socket = io();
-        socket.emit('update position', "X: " + x + ", Y: " + y);
+        socket.emit('update position', {
+            idClient: idClient,
+            data: {
+                position: [x, y]
+            }
+        });
     };
     Board.prototype.changeColor = function () {
     };
@@ -63,24 +68,64 @@ var Board = (function () {
     };
     return Board;
 })();
+var Socket = (function () {
+    function Socket(idClient) {
+        this.socket = io();
+        this.idClient = idClient;
+    }
+    Socket.prototype.createHandler = function (typeHeandler, callback) {
+        this.socket.on(typeHeandler, function (data) {
+            callback(data);
+        });
+    };
+    Socket.prototype.sendMessage = function (typeMsg, data) {
+        var msg = {
+            idClient: this.idClient,
+            data: data
+        };
+        this.socket.emit(typeMsg, msg);
+    };
+    return Socket;
+})();
+var idClient = Math.floor(Math.random() * 10000);
 var Game = (function () {
     function Game() {
         this.socket = io();
         //this.socket.emit('newUser', 'pepe');
     }
+    Game.prototype.connectServer = function (name) {
+        var socket = io();
+        var that = this;
+        socket.on('connect', function (data) {
+            socket.emit('send client info', { customId: idClient, name: name });
+        });
+        this.socket.on('update players', function (msg) {
+            var text = "Users connected: <br>";
+            for (var i = 0; i < msg.players.length; i++) {
+                text += " - " + msg.players[i].name + "<br>";
+            }
+            document.getElementById("players").innerHTML = text;
+        });
+        this.socket.on('update position in client', function (msg) {
+            var text = "<br>";
+            for (var i = 0; i < msg.length; i++) {
+                text += "(x: " + msg[i].position[0] + ", y: " + msg[i].position[1] + ")<br>";
+            }
+            document.getElementById("clicks").innerHTML = text;
+        });
+    };
+    Game.prototype.initGame = function () {
+    };
+    Game.prototype.gameLoop = function () {
+    };
     return Game;
 })();
-// Esta parte es temporal hasta que tengamos la clase game que gestione todo esto
-var isInit = false;
-function gameLoop() {
-    setTimeout(gameLoop, 100);
-    if (!isInit) {
-        var board = new Board("canvas", 50, 50);
-        board.generateTiles();
-    }
-    board.draw();
-}
 window.onload = function () {
-    gameLoop();
+    var userName = prompt("Please enter your name", "Harry Potter");
+    var game = new Game();
+    var board = new Board("canvas", 50, 50);
+    board.generateTiles();
+    board.draw();
+    game.connectServer(userName);
 };
 //# sourceMappingURL=app.js.map
