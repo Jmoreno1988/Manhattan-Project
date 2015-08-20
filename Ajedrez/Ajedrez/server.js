@@ -1,7 +1,9 @@
 ﻿var app = require('express')();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
+var clients = [];
 
+// Routes 
 app.get('/', function (req, res) {
     res.sendFile(__dirname + '/index.html');
 });
@@ -16,15 +18,37 @@ app.get('/app.js', function (req, res) {
 
 io.on('connection', function (socket) {
 
-    console.log('New user connected');
+    socket.on('send client info', function (data) {
+        var clientInfo = {
+            customId: data.customId,
+            clientId: socket.id,
+            name: data.name,
+            position: [0, 0]
+        }
+        clients.push(clientInfo)
 
-    socket.on('update position', function (msg) {
-        io.emit('update position', msg);
-        console.log(msg);
+        io.emit('update players', { players: clients });
     });
 
-    socket.on('disconnect', function () {
-        console.log('User disconnected');
+    socket.on('update position', function (msg) {
+        var client = searchClient(msg.idClient);
+        client.position = msg.data.position;
+
+        io.emit('update position in client', clients);
+    });
+
+    socket.on('disconnect', function (data) {
+        for (var i = 0, len = clients.length; i < len; ++i) {
+            var c = clients[i];
+
+            if (c.clientId == socket.id) {
+                clients.splice(i, 1);
+                break;
+            }
+        }
+
+        io.emit('update players', { players: clients });
+        io.emit('update position in client', clients);
     });
 
 });
@@ -32,3 +56,13 @@ io.on('connection', function (socket) {
 http.listen(3000, function () {
     console.log('listening on *:3000');
 });
+
+function searchClient(id) {
+    var client = {}
+    for (var i = 0; i < clients.length; i++) {
+        if (id == clients[i].customId) {
+            client = clients[i];
+        }
+    }
+    return client;
+}
