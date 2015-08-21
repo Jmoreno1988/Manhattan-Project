@@ -1,6 +1,7 @@
 ﻿var app = require('express')();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
+var routes = require('./routes.js')(app);
 var clients = [];
 
 io.on('connection', function (socket) {
@@ -41,7 +42,7 @@ io.on('connection', function (socket) {
 });
 
 http.listen(3000, function () {
-    console.log('listening on *:3000');
+    console.log('Ajedrez app listening on *:3000');
 });
 
 function searchClient(id) {

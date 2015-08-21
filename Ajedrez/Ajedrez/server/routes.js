@@ -1,11 +1,17 @@
-﻿app.get('/', function (req, res) {
-    res.sendFile(__dirname + '/index.html');
-});
+﻿var path = require("path");
 
-app.get('/app.css', function (req, res) {
-    res.sendFile(__dirname + '/app.css');
-});
+module.exports = function (app) {
 
-app.get('/app.js', function (req, res) {
-    res.sendFile(__dirname + '/app.js');
-});
+    app.get('/', function (req, res) {
+        res.sendFile(path.resolve(__dirname + '/../index.html'));
+    });
+
+    app.get('/app.css', function (req, res) {
+        res.sendFile(path.resolve(__dirname + '/../app.css'));
+    });
+
+    app.get('/app.js', function (req, res) {
+        res.sendFile(path.resolve(__dirname + '/../app.js'));
+    });
+
+}
